@@ -15,7 +15,6 @@ function pesquisarImagem() {
                 const fotoDoPerfil = e.target.result;
                 imagem.src = fotoDoPerfil;
                 fotoHeader.src = fotoDoPerfil;
-                console.log('Foto Perfil',fotoDoPerfil);
             })
         }
     })

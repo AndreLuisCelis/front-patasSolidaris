@@ -1,25 +1,21 @@
 const formulario = document.querySelector("[data-formulario]");
+const usuario = JSON.parse(localStorage.getItem("usuario"));
 
 formulario.addEventListener('submit', async (e) => {
     e.preventDefault();
-
-    const usuario = JSON.parse(localStorage.getItem("usuario"));
     const perfil = {
         "id": usuario.id,
         "nome": e.target.elements.nome.value,
         "telefone": e.target.elements.telefone.value,
         "cidade": e.target.elements.cidade.value,
         "sobre": e.target.elements.sobre.value,
-        "foto": e.target[0].elements[0].previousElementSibling.firstElementChild.src
+        "foto": usuario.foto      
     }
     const ResponseEditedPerfil = await salvarPerfilUsuario(perfil);
     localStorage.setItem("usuario", JSON.stringify(ResponseEditedPerfil.user));
     window.location.href = "./home.html";
 })
 
-const usuario = JSON.parse(localStorage.getItem("usuario"));
-
-// const srcFoto = localStorage.getItem("foto");
 
 const inputNome = document.getElementById("nome")
 inputNome.value = usuario.nome;
@@ -44,7 +40,7 @@ async function salvarPerfilUsuario(user) {
     const credentials = localStorage.getItem('credentials').replace(/"/g, "");
     console.log("Token de autenticação:", `Basic ${credentials}`);
 	try {
-		const response = await fetch("https://api-patassolidarias-production.up.railway.app/api/user", {
+		const response = await fetch(`${window.apiUrl}/api/user`, {
 			method: "PUT", // Método HTTP para adicionar
 			headers: {
 				"Content-Type": "application/json", // Tipo de conteúdo
@@ -59,6 +55,38 @@ async function salvarPerfilUsuario(user) {
 		return error;
 	}
 }
+document.getElementById('input-imagem').addEventListener('change', async (event) => {
+    const credentials = localStorage.getItem('credentials').replace(/"/g, "");
+    const file = event.target.files[0];  
+    if (!file) {
+      document.getElementById('status').textContent = "Nenhum arquivo selecionado.";
+      return;
+    }
+    // Cria um FormData e adiciona o arquivo
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      // Envia o arquivo para a API usando fetch
+      const response = await fetch(`${window.apiUrl}/file/uploadFile`, {
+        method: "POST",
+        headers: {
+            'Authorization': `Basic ${credentials}`,
+        },
+        body: formData,
+      });
+      // Checa a resposta da API
+      if (response.ok) {
+        const result = await response.json(); // Obter a resposta como texto
+        const usuario = JSON.parse(localStorage.getItem("usuario"));
+        
+        usuario.foto = result.fileDownloadUri;
+        localStorage.setItem("usuario", JSON.stringify(usuario));
+        return;
+      } 
+    } catch (error) {
+      console.error("Erro ao enviar o arquivo:", error);
+    }
+  });
 
 
 
