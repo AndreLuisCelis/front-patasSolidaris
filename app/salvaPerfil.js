@@ -14,7 +14,7 @@ formulario.addEventListener('submit', async (e) => {
     }
     const ResponseEditedPerfil = await salvarPerfilUsuario(perfil);
     localStorage.setItem("usuario", JSON.stringify(ResponseEditedPerfil.user));
-    window.location.href = './home.html'
+    window.location.href = "./home.html";
 })
 
 const usuario = JSON.parse(localStorage.getItem("usuario"));
