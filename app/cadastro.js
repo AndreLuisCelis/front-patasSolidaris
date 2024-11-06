@@ -46,7 +46,7 @@ async function adicionarUsuario(user) {
 		const jsonResponse = await response.json();
 		return jsonResponse;
 	} catch (error) {
-		console.error("Erro na requisição:", error);git 
+		console.error("Erro na requisição:", error);
 		return error;
 	}
 }
