@@ -7,11 +7,8 @@ const cadastro = JSON.parse(localStorage.getItem("cadastro") || "[]");
 formulario.addEventListener("submit", (e) => {
 	e.preventDefault();
     const user = {
-        nome: null,
         email: email.value,
-        idade: null,
         senha: senha.value,
-        telefone: null
     };
     login(user);
 });

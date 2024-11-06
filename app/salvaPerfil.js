@@ -1,5 +1,6 @@
 const formulario = document.querySelector("[data-formulario]");
 const usuario = JSON.parse(localStorage.getItem("usuario"));
+let urlFotoPerfil;
 
 formulario.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -9,7 +10,7 @@ formulario.addEventListener('submit', async (e) => {
         "telefone": e.target.elements.telefone.value,
         "cidade": e.target.elements.cidade.value,
         "sobre": e.target.elements.sobre.value,
-        "foto": usuario.foto      
+        "foto": urlFotoPerfil? urlFotoPerfil: usuario.foto     
     }
     const ResponseEditedPerfil = await salvarPerfilUsuario(perfil);
     localStorage.setItem("usuario", JSON.stringify(ResponseEditedPerfil.user));
@@ -75,7 +76,8 @@ document.getElementById('input-imagem').addEventListener('change', async (event)
       });
       // Checa a resposta da API
       if (response.ok) {
-        const result = await response.json(); // Obter a resposta como texto    
+        const result = await response.json(); // Obter a resposta como texto 
+        urlFotoPerfil = result.fileDownloadUri;git   
         usuario.foto = result.fileDownloadUri;
         localStorage.setItem("usuario", JSON.stringify(usuario));
         return;
