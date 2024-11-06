@@ -36,7 +36,7 @@ formulario.addEventListener("submit", (e) => {
 
 async function adicionarUsuario(user) {
 	try {
-		const response = await fetch("https://api-patassolidarias-production.up.railway.app/auth/create", {
+		const response = await fetch(`${window.apiUrl}/auth/create`, {
 			method: "POST", // Método HTTP para adicionar
 			headers: {
 				"Content-Type": "application/json", // Tipo de conteúdo
@@ -46,7 +46,7 @@ async function adicionarUsuario(user) {
 		const jsonResponse = await response.json();
 		return jsonResponse;
 	} catch (error) {
-		console.error("Erro na requisição:", error);
+		console.error("Erro na requisição:", error);git 
 		return error;
 	}
 }
