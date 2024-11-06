@@ -3,8 +3,6 @@ const email = document.getElementById("email");
 const senha = document.getElementById("senha");
 const mensagemErroLogin = document.getElementById("mensagem-erro-login");
 const cadastro = JSON.parse(localStorage.getItem("cadastro") || "[]");
-window.apiUrl = 'http://localhost:8080';
-// 'https://api-patassolidarias-production.up.railway.app';
 
 formulario.addEventListener("submit", (e) => {
 	e.preventDefault();

@@ -38,7 +38,6 @@ imagemHeader.src = usuario.foto ? usuario.foto : "./img/Usuario.svg";
 
 async function salvarPerfilUsuario(user) {
     const credentials = localStorage.getItem('credentials').replace(/"/g, "");
-    console.log("Token de autenticação:", `Basic ${credentials}`);
 	try {
 		const response = await fetch(`${window.apiUrl}/api/user`, {
 			method: "PUT", // Método HTTP para adicionar
@@ -76,9 +75,7 @@ document.getElementById('input-imagem').addEventListener('change', async (event)
       });
       // Checa a resposta da API
       if (response.ok) {
-        const result = await response.json(); // Obter a resposta como texto
-        const usuario = JSON.parse(localStorage.getItem("usuario"));
-        
+        const result = await response.json(); // Obter a resposta como texto    
         usuario.foto = result.fileDownloadUri;
         localStorage.setItem("usuario", JSON.stringify(usuario));
         return;
